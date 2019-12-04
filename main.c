@@ -2,6 +2,26 @@
 #include <stdlib.h>
 #include <time.h>
 
+int baixo (int grelha[][], int sz)
+{
+
+for (i=sz;i>0;i--):
+    {
+     for(j=0;j<sz;j++)
+       {
+        if (grelha[i][j]==grelha[i-1][j])
+          {
+            grelha[i][j]=grelha[i][j]*2;
+             if(i-2<0)
+               {
+                grelha[i-1][j]=0;
+               }
+              else
+                grelha[i-1][j]=grelha[i-2][j];
+           }
+        }
+      }
+}
 
 
 int geranumero()
