@@ -4,7 +4,7 @@
 
 
 
-int geranumero()
+int geranumero1()
 {
 int a = rand()%3;
     if(a<2)
