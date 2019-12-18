@@ -40,27 +40,44 @@ void inicializagrelha(int grelha[][10], int sz)
 
 }
 
-/*int baixo (int grelha[][10], int sz)
+int baixo (int grelha[][10], int sz)
 {
+int numerodecombinacoes = 0;
 
-    for (int i=sz; i>0; i--)
+    for (int i=sz-1; i>0; i--)
     {
         for(int j=0; j<sz; j++)
         {
-            if (grelha[i][j]==grelha[i-1][j])
+            if(grelha[i][j]==grelha[i-1][j])
             {
                 grelha[i][j]=grelha[i][j]*2;
-                if(i-2<0)
-                {
-                    grelha[i-1][j]=0;
-                }
-                else
-                    grelha[i-1][j]=grelha[i-2][j];
+                grelha[i-1][j]=0;
+                numerodecombinacoes++;
             }
+            if(grelha[i][j]==0)
+            {
+                grelha[i][j]=grelha[i-1][j];
+                grelha[i-1][j]=0;
+            }
+
         }
     }
+    return numerodecombinacoes;
 }
-*/
+
+void mostrar (int grelha[][10], int sz)
+{
+      for (int r=0; r<sz; r++) //imprime a matriz
+    {
+        for (int t=0; t<sz; t++)
+        {
+            printf("%2d", grelha[r][t]);
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+}
 
 int main()
 {
@@ -71,7 +88,7 @@ int main()
     int grelha[10][10];
     inicializagrelha(grelha, sz);
 
-     for (int r=0; r<sz; r++) //imprime a matriz
+    for (int r=0; r<sz; r++) //imprime a matriz
     {
         for (int t=0; t<sz; t++)
         {
@@ -80,6 +97,8 @@ int main()
         printf("\n");
     }
 
+    printf("\n");
 
-return 0;
+
+    return 0;
 }
