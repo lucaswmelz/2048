@@ -42,11 +42,39 @@ void inicializagrelha(int grelha[][10], int sz)
 
 int baixo (int grelha[][10], int sz)
 {
-int numerodecombinacoes = 0;
+    int numerodecombinacoes = 0;
+    int count = 0;
+    int i, j, h;
 
-    for (int i=sz-1; i>0; i--)
+    for(i=0; i<sz; i++)
     {
-        for(int j=0; j<sz; j++)
+        for (j=0; j<sz; j++)
+        {
+            if(grelha[i][j]!=0)
+            {
+                for(h=i+1; h<sz; h++)
+                {
+                    if(grelha[h][j]==0)
+                    {
+                        count++;
+                    }
+                }
+
+                if (count>0)
+                {
+                    grelha[i+count][j]=grelha[i][j];
+                    grelha[i][j]=0;
+                }
+            }
+            count = 0;
+
+
+        }
+    }
+
+for (i=sz-1; i>0; i--)
+    {
+        for(j=0; j<sz; j++)
         {
             if(grelha[i][j]==grelha[i-1][j])
             {
@@ -62,12 +90,13 @@ int numerodecombinacoes = 0;
 
         }
     }
+
     return numerodecombinacoes;
 }
 
 void mostrar (int grelha[][10], int sz)
 {
-      for (int r=0; r<sz; r++) //imprime a matriz
+    for (int r=0; r<sz; r++) //imprime a matriz
     {
         for (int t=0; t<sz; t++)
         {
@@ -79,6 +108,19 @@ void mostrar (int grelha[][10], int sz)
     printf("\n");
 }
 
+void novonumero(int grelha[][10], int sz)
+{
+    int linha = rand()%sz;
+    int coluna = rand()%sz;
+
+    while (grelha[linha][coluna]!=0)
+    {
+        linha=rand()%sz;
+        coluna=rand()%sz;
+    }
+    grelha[linha][coluna]=geranumero();
+}
+
 int main()
 {
     int sz;
@@ -88,14 +130,11 @@ int main()
     int grelha[10][10];
     inicializagrelha(grelha, sz);
 
-    for (int r=0; r<sz; r++) //imprime a matriz
-    {
-        for (int t=0; t<sz; t++)
-        {
-            printf("%2d", grelha[r][t]);
-        }
-        printf("\n");
-    }
+    mostrar(grelha, sz);
+
+    baixo(grelha, sz);
+
+    mostrar(grelha,sz);
 
     printf("\n");
 
