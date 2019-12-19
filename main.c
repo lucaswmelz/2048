@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 int geranumero()
 {
@@ -287,58 +288,46 @@ void novonumero(int grelha[][10], int sz)
     grelha[linha][coluna]=geranumero();
 }
 
+int jogada(int grelha[][10], int sz, char sentido[]){
+	int ncomb=0;
+	if(strcmp(sentido, "B")==0){
+			ncomb = baixo(grelha, sz);
+	}else if(strcmp(sentido, "C")==0){
+			ncomb = cima(grelha, sz);
+	}else if(strcmp(sentido, "D")==0){
+			ncomb = direita(grelha, sz);
+	}else if(strcmp(sentido, "E")==0){
+			ncomb = esquerda(grelha, sz);
+	}
+	return ncomb;
+}
+
 int main()
 {
     int sz;
-    printf("Qual a dimensao da grelha?\n");
+    printf("Qual a dimensao da grelha? ");
     scanf("%d", &sz);
     srand(time(NULL));
     int grelha[10][10];
     inicializagrelha(grelha, sz);
-    char aux = 'C';
-    char aux2 = 'D';
-    char aux3 = 'B';
-    char aux4 = 'E';
-    char aux5 = 'C';
-    int jogada = (int)aux;
+    char input[2];
     int numero_de_comb = 0;
+    
     mostrar(grelha, sz);
 
-    while(jogada=(int)aux)
-    {
-        scanf("%c", &aux5);
-        jogada = (int)aux5;
-        if (jogada==(int)aux)
-        {
-            numero_de_comb = cima(grelha,sz);
-            novonumero(grelha,sz);
-            mostrar(grelha, sz);
-            printf("Numero de combinacoes: %d\n", numero_de_comb);
-        }
-           if (jogada==(int)aux3)
-        {
-            numero_de_comb = baixo(grelha,sz);
-            novonumero(grelha,sz);
-            mostrar(grelha, sz);
-            printf("Numero de combinacoes: %d\n", numero_de_comb);
-        }
-               if (jogada==(int)aux2)
-        {
-            numero_de_comb = direita(grelha,sz);
-            novonumero(grelha,sz);
-            mostrar(grelha, sz);
-            printf("Numero de combinacoes: %d\n", numero_de_comb);
-        }
-             if (jogada==(int)aux4)
-        {
-            numero_de_comb = esquerda(grelha,sz);
-            novonumero(grelha,sz);
-            mostrar(grelha, sz);
-            printf("Numero de combinacoes: %d\n", numero_de_comb);
-        }
-
-    }
-
+	while(strcmp(input, "F")!=0){
+		printf("Sentido(F para sair): ");
+		scanf("%s", input);
+		if(strcmp(input, "F")==0){
+			printf("A sair...");
+			exit(1);
+		}else{	
+			numero_de_comb = jogada(grelha, sz, input);
+			mostrar(grelha, sz);
+			novonumero(grelha,sz);
+			printf("Numero de combinacoes: %d\n", numero_de_comb);
+		}
+	}
 
     return 0;
 }
