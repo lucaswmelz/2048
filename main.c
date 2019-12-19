@@ -40,13 +40,70 @@ void inicializagrelha(int grelha[][10], int sz)
 
 }
 
+int direita (int grelha[][10], int sz)
+{
+    int numerodecombinacoes;
+    int i, j, h;
+    int count = 0;
+
+    /* joga os numeros para a direita se houver posições livres (com 0's) */
+
+    for (i=0; i<sz; i++)
+    {
+        for(j=sz-2; j>=0; j--)
+        {
+            if(grelha[i][j]!=0)
+            {
+                for(h=j+1; h<sz; h++)
+                {
+                    if(grelha[i][h]==0)
+                    {
+                        count++;
+                    }
+                }
+                if(count>0)
+                {
+                    grelha[i][j+count]=grelha[i][j];
+                    grelha[i][j]=0;
+                }
+            }
+            count = 0;
+        }
+    }
+
+    /* soma os numeros iguais */
+
+    for (i=0; i<sz; i++)
+    {
+        for(j=sz-1; j>0; j--)
+        {
+            if(grelha[i][j]==grelha[i][j-1])
+            {
+                grelha[i][j]=grelha[i][j]*2;
+                grelha[i][j-1]=0;
+                numerodecombinacoes++;
+            }
+            if(grelha[i][j]==0)
+            {
+                grelha[i][j]=grelha[i][j-1];
+                grelha[i][j-1]=0;
+            }
+
+        }
+    }
+
+
+    return numerodecombinacoes;
+}
+
+
 int baixo (int grelha[][10], int sz)
 {
     int numerodecombinacoes = 0;
     int count = 0;
     int i, j, h;
 
-    for(i=0; i<sz; i++)
+    for(i=sz-2; i>=0; i--)
     {
         for (j=0; j<sz; j++)
         {
@@ -72,7 +129,7 @@ int baixo (int grelha[][10], int sz)
         }
     }
 
-for (i=sz-1; i>0; i--)
+    for (i=sz-1; i>0; i--)
     {
         for(j=0; j<sz; j++)
         {
@@ -100,7 +157,7 @@ void mostrar (int grelha[][10], int sz)
     {
         for (int t=0; t<sz; t++)
         {
-            printf("%2d", grelha[r][t]);
+            printf("%3d ", grelha[r][t]);
         }
         printf("\n");
     }
@@ -129,14 +186,21 @@ int main()
     srand(time(NULL));
     int grelha[10][10];
     inicializagrelha(grelha, sz);
+    int testa=1;
 
-    mostrar(grelha, sz);
-
-    baixo(grelha, sz);
-
-    mostrar(grelha,sz);
-
-    printf("\n");
+    while(testa==1)
+    {
+        scanf("%d", &testa);
+        printf("baixo\n");
+        baixo(grelha, sz);
+        mostrar(grelha, sz);
+        printf("novo numero\n");
+        novonumero(grelha, sz);
+        mostrar(grelha, sz);
+        printf("direita\n");
+        direita(grelha,sz);
+        mostrar(grelha, sz);
+    }
 
 
     return 0;
