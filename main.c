@@ -43,7 +43,7 @@ void inicializagrelha(int grelha[][10], int sz)
 
 int direita (int grelha[][10], int sz)
 {
-    int numerodecombinacoes;
+    int numerodecombinacoes = 0;
     int i, j, h;
     int count = 0;
 
@@ -78,7 +78,7 @@ int direita (int grelha[][10], int sz)
     {
         for(j=sz-1; j>0; j--)
         {
-            if(grelha[i][j]==grelha[i][j-1])
+            if(grelha[i][j]==grelha[i][j-1] && grelha[i][j]!=0)
             {
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i][j-1]=0;
@@ -99,7 +99,7 @@ int direita (int grelha[][10], int sz)
 
 int esquerda (int grelha[][10], int sz)
 {
-    int numerodecombinacoes;
+    int numerodecombinacoes = 0;
     int i, j, h;
     int count = 0;
 
@@ -134,7 +134,7 @@ int esquerda (int grelha[][10], int sz)
     {
         for(j=0; j<sz-1; j++)
         {
-            if(grelha[i][j]==grelha[i][j+1])
+            if(grelha[i][j]==grelha[i][j+1] && grelha[i][j]!=0)
             {
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i][j+1]=0;
@@ -189,7 +189,7 @@ int baixo (int grelha[][10], int sz)
     {
         for(j=0; j<sz; j++)
         {
-            if(grelha[i][j]==grelha[i-1][j])
+            if(grelha[i][j]==grelha[i-1][j] && grelha[i][j]!=0)
             {
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i-1][j]=0;
@@ -243,7 +243,7 @@ int cima (int grelha[][10], int sz)
     {
         for(j=0; j<sz; j++)
         {
-            if(grelha[i][j]==grelha[i+1][j])
+            if(grelha[i][j]==grelha[i+1][j] && grelha[i][j]!=0)
             {
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i+1][j]=0;
@@ -312,7 +312,7 @@ int main()
     inicializagrelha(grelha, sz);
     char input[2];
     int numero_de_comb = 0;
-    
+
     mostrar(grelha, sz);
 
 	while(strcmp(input, "F")!=0){
@@ -321,10 +321,10 @@ int main()
 		if(strcmp(input, "F")==0){
 			printf("A sair...");
 			exit(1);
-		}else{	
+		}else{
 			numero_de_comb = jogada(grelha, sz, input);
-			mostrar(grelha, sz);
 			novonumero(grelha,sz);
+			mostrar(grelha, sz);
 			printf("Numero de combinacoes: %d\n", numero_de_comb);
 		}
 	}
