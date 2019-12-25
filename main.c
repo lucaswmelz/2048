@@ -83,6 +83,11 @@ int direita (int grelha[][10], int sz)
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i][j-1]=0;
                 numerodecombinacoes++;
+                if (grelha[i][j]==2048)
+                {
+                    printf("\nParabéns, você ganhou!");
+                    exit(1);
+                }
             }
             if(grelha[i][j]==0)
             {
@@ -139,6 +144,11 @@ int esquerda (int grelha[][10], int sz)
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i][j+1]=0;
                 numerodecombinacoes++;
+                if (grelha[i][j]==2048)
+                {
+                    printf("\nParabens, voce ganhou!");
+                    exit(1);
+                }
             }
             if(grelha[i][j]==0)
             {
@@ -194,6 +204,11 @@ int baixo (int grelha[][10], int sz)
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i-1][j]=0;
                 numerodecombinacoes++;
+                if (grelha[i][j]==2048)
+                {
+                    printf("\nParabens, voce ganhou!");
+                    exit(1);
+                }
             }
             if(grelha[i][j]==0)
             {
@@ -248,6 +263,11 @@ int cima (int grelha[][10], int sz)
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i+1][j]=0;
                 numerodecombinacoes++;
+                if (grelha[i][j]==2048)
+                {
+                    printf("\nParabens, voce ganhou!");
+                    exit(1);
+                }
             }
             if(grelha[i][j]==0)
             {
@@ -285,21 +305,59 @@ void novonumero(int grelha[][10], int sz)
         linha=rand()%sz;
         coluna=rand()%sz;
     }
-    grelha[linha][coluna]=geranumero();
+    grelha[linha][coluna]= geranumero();
+}
+void game_over(int grelha[][10], int sz)
+{
+    int i, j;
+    int controle1 = 0;
+    int controle2 = 0;
+
+    for(i=0; i<sz; i++)
+    {
+        for (j=0; j<sz; j++)
+        {
+            if(grelha[i][j]!=0)
+            {
+                controle1++;
+            }
+            if(grelha[i][j]!=grelha[i+1][j] && grelha[i][j]!=grelha[i-1][j] && grelha[i][j]!=grelha[i][j-1] && grelha[i][j]!=grelha[i][j+1])
+            {
+            controle2++;
+            }
+        }
+
+
+     }
+
+ if (controle1==(sz*sz)&&controle2==(sz*sz))
+    {
+        printf("Game over\n");
+        exit(1);
+    }
+
 }
 
-int jogada(int grelha[][10], int sz, char sentido[]){
-	int ncomb=0;
-	if(strcmp(sentido, "B")==0){
-			ncomb = baixo(grelha, sz);
-	}else if(strcmp(sentido, "C")==0){
-			ncomb = cima(grelha, sz);
-	}else if(strcmp(sentido, "D")==0){
-			ncomb = direita(grelha, sz);
-	}else if(strcmp(sentido, "E")==0){
-			ncomb = esquerda(grelha, sz);
-	}
-	return ncomb;
+int jogada(int grelha[][10], int sz, char sentido[])
+{
+    int ncomb=0;
+    if(strcasecmp(sentido, "B")==0)
+    {
+        ncomb = baixo(grelha, sz);
+    }
+    else if(strcasecmp(sentido, "C")==0)
+    {
+        ncomb = cima(grelha, sz);
+    }
+    else if(strcasecmp(sentido, "D")==0)
+    {
+        ncomb = direita(grelha, sz);
+    }
+    else if(strcasecmp(sentido, "E")==0)
+    {
+        ncomb = esquerda(grelha, sz);
+    }
+    return ncomb;
 }
 
 int main()
@@ -315,19 +373,24 @@ int main()
 
     mostrar(grelha, sz);
 
-	while(strcmp(input, "F")!=0){
+    while(strcasecmp(input, "F")!=0)
+    {
 		printf("Sentido(F para sair): ");
-		scanf("%s", input);
-		if(strcmp(input, "F")==0){
-			printf("A sair...");
-			exit(1);
-		}else{
-			numero_de_comb = jogada(grelha, sz, input);
-			novonumero(grelha,sz);
-			mostrar(grelha, sz);
-			printf("Numero de combinacoes: %d\n", numero_de_comb);
-		}
-	}
+        scanf("%s", input);
+        if(strcasecmp(input, "F")==0)
+        {
+            printf("A sair...");
+            exit(1);
+        }
+        else
+        {
+            numero_de_comb = jogada(grelha, sz, input);
+            novonumero(grelha,sz);
+            mostrar(grelha, sz);
+            printf("Numero de combinacoes: %d\n\n", numero_de_comb);
+            game_over(grelha,sz);
+        }
+    }
 
     return 0;
 }
