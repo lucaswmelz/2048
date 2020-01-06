@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <math.h>
 
 int geranumero()
 {
@@ -83,11 +84,6 @@ int direita (int grelha[][10], int sz)
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i][j-1]=0;
                 numerodecombinacoes++;
-                if (grelha[i][j]==2048)
-                {
-                    printf("\nParabéns, você ganhou!");
-                    exit(1);
-                }
             }
             if(grelha[i][j]==0)
             {
@@ -144,11 +140,6 @@ int esquerda (int grelha[][10], int sz)
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i][j+1]=0;
                 numerodecombinacoes++;
-                if (grelha[i][j]==2048)
-                {
-                    printf("\nParabens, voce ganhou!");
-                    exit(1);
-                }
             }
             if(grelha[i][j]==0)
             {
@@ -204,11 +195,6 @@ int baixo (int grelha[][10], int sz)
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i-1][j]=0;
                 numerodecombinacoes++;
-                if (grelha[i][j]==2048)
-                {
-                    printf("\nParabens, voce ganhou!");
-                    exit(1);
-                }
             }
             if(grelha[i][j]==0)
             {
@@ -263,11 +249,6 @@ int cima (int grelha[][10], int sz)
                 grelha[i][j]=grelha[i][j]*2;
                 grelha[i+1][j]=0;
                 numerodecombinacoes++;
-                if (grelha[i][j]==2048)
-                {
-                    printf("\nParabens, voce ganhou!");
-                    exit(1);
-                }
             }
             if(grelha[i][j]==0)
             {
@@ -307,7 +288,7 @@ void novonumero(int grelha[][10], int sz)
     }
     grelha[linha][coluna]= geranumero();
 }
-void game_over(int grelha[][10], int sz)
+void fim_de_jogo(int grelha[][10], int sz, int numero_total_de_comb)
 {
     int i, j;
     int controle1 = 0;
@@ -317,27 +298,134 @@ void game_over(int grelha[][10], int sz)
     {
         for (j=0; j<sz; j++)
         {
+            if (grelha[i][j]==2048)
+            {
+                printf("\nParabens, voce ganhou!\nO numero total de combinacoes durante o jogo foi:%d.", numero_total_de_comb);
+                conta_pecas(grelha, sz);
+                exit(1);
+            }
+
             if(grelha[i][j]!=0)
             {
                 controle1++;
             }
             if(grelha[i][j]!=grelha[i+1][j] && grelha[i][j]!=grelha[i-1][j] && grelha[i][j]!=grelha[i][j-1] && grelha[i][j]!=grelha[i][j+1])
             {
-            controle2++;
+                controle2++;
             }
         }
 
 
-     }
+    }
 
- if (controle1==(sz*sz)&&controle2==(sz*sz))
+    if (controle1==(sz*sz)&&controle2==(sz*sz))
     {
-        printf("Game over\n");
+        printf("Game over.\n");
+        printf("O numero total de combinacoes durante o jogo foi: %d.\n", numero_total_de_comb);
+        conta_pecas(grelha, sz);
         exit(1);
     }
 
 }
 
+void conta_pecas (int grelha[][10], int sz)
+{
+    int pecas[11];
+    for(int i=0; i<11; i++)
+    {
+        pecas[i]=0;
+    }
+
+    for (int i = 0; i<sz; i++)
+    {
+        for (int j = 0; j<sz; j++)
+        {
+            if (grelha[i][j]<=64)
+            {
+                if(grelha[i][j]<=8)
+                {
+                    if(grelha[i][j]==2)
+                    {
+                        pecas[0]=pecas[0]+1;
+                    }
+                    else
+                    {
+                        if(grelha[i][j]==4)
+                        {
+                            pecas[1] = pecas[1]+1;
+                        }
+                        else
+                        {
+                            pecas[2]=pecas[2]+1;
+                        }
+                    }
+                }
+
+                else // se for menor ou igual a 64 e maior que 8
+                {
+                    if(grelha[i][j]==16)
+                    {
+                        pecas[3]=pecas[3]+1;
+                    }
+                    else
+                    {
+                        if(grelha[i][j]==32)
+                        {
+                            pecas[4]=pecas[4]+1;
+                        }
+                        else
+                        {
+                            pecas[5]=pecas[5]+1;
+                        }
+                    }
+                }
+
+            }
+            else // se for maior do que 64
+            {
+                if(grelha[i][j]<=512)
+                {
+                    if(grelha[i][j]==128)
+                    {
+                        pecas[6]=pecas[6]+1;
+                    }
+                    else
+                    {
+                        if(grelha[i][j]==256)
+                        {
+                            pecas[7]=pecas[7]+1;
+                        }
+                        else
+                        {
+                            pecas[8]=pecas[8]+1;
+                        }
+                    }
+                }
+                else // se for 1024 ou 2048
+                {
+                    if(grelha[i][j]==1024)
+                    {
+                        pecas[9]=pecas[9]+1;
+                    }
+                    else
+                    {
+                        pecas[10]=pecas[10]+1;
+                    }
+                }
+
+            }
+
+        }
+    }
+for(int i=0; i<11;i++)
+{
+    if(pecas[i]!=0)
+    {
+        printf("Quantidade de pecas com o valor %d: %d.\n", (int)pow(2,(i+1)), pecas[i]);
+    }
+}
+
+}
 int jogada(int grelha[][10], int sz, char sentido[])
 {
     int ncomb=0;
@@ -370,12 +458,13 @@ int main()
     inicializagrelha(grelha, sz);
     char input[2];
     int numero_de_comb = 0;
+    int numero_total_de_comb = 0;
 
     mostrar(grelha, sz);
 
     while(strcasecmp(input, "F")!=0)
     {
-		printf("Sentido(F para sair): ");
+        printf("Sentido(F para sair): ");
         scanf("%s", input);
         if(strcasecmp(input, "F")==0)
         {
@@ -385,10 +474,11 @@ int main()
         else
         {
             numero_de_comb = jogada(grelha, sz, input);
+            numero_total_de_comb = numero_total_de_comb + numero_de_comb;
             novonumero(grelha,sz);
             mostrar(grelha, sz);
             printf("Numero de combinacoes: %d\n\n", numero_de_comb);
-            game_over(grelha,sz);
+            fim_de_jogo(grelha,sz,numero_total_de_comb);
         }
     }
 
