@@ -315,7 +315,7 @@ void conta_pecas (int grelha[][10], int sz)
                         {
                             pecas[1] = pecas[1]+1;
                         }
-                        else
+                        if(grelha[i][j]==8)
                         {
                             pecas[2]=pecas[2]+1;
                         }
@@ -356,7 +356,7 @@ void conta_pecas (int grelha[][10], int sz)
                         {
                             pecas[7]=pecas[7]+1;
                         }
-                        else
+                        if(grelha[i][j]==512)
                         {
                             pecas[8]=pecas[8]+1;
                         }
@@ -368,7 +368,7 @@ void conta_pecas (int grelha[][10], int sz)
                     {
                         pecas[9]=pecas[9]+1;
                     }
-                    else
+                    if(grelha[i][j]==2048)
                     {
                         pecas[10]=pecas[10]+1;
                     }
@@ -470,7 +470,7 @@ int main()
         if(strcasecmp(input, "F")==0)
         {
 			printf("Numero de combinacoes: %d\n\n", numero_de_comb);
-			conta_pecas (grelha, sz);
+			conta_pecas(grelha, sz);
             printf("A sair...");
             exit(1);
         }
