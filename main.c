@@ -288,45 +288,6 @@ void novonumero(int grelha[][10], int sz)
     }
     grelha[linha][coluna]= geranumero();
 }
-void fim_de_jogo(int grelha[][10], int sz, int numero_total_de_comb)
-{
-    int i, j;
-    int controle1 = 0;
-    int controle2 = 0;
-
-    for(i=0; i<sz; i++)
-    {
-        for (j=0; j<sz; j++)
-        {
-            if (grelha[i][j]==2048)
-            {
-                printf("\nParabens, voce ganhou!\nO numero total de combinacoes durante o jogo foi:%d.", numero_total_de_comb);
-                conta_pecas(grelha, sz);
-                exit(1);
-            }
-
-            if(grelha[i][j]!=0)
-            {
-                controle1++;
-            }
-            if(grelha[i][j]!=grelha[i+1][j] && grelha[i][j]!=grelha[i-1][j] && grelha[i][j]!=grelha[i][j-1] && grelha[i][j]!=grelha[i][j+1])
-            {
-                controle2++;
-            }
-        }
-
-
-    }
-
-    if (controle1==(sz*sz)&&controle2==(sz*sz))
-    {
-        printf("Game over.\n");
-        printf("O numero total de combinacoes durante o jogo foi: %d.\n", numero_total_de_comb);
-        conta_pecas(grelha, sz);
-        exit(1);
-    }
-
-}
 
 void conta_pecas (int grelha[][10], int sz)
 {
@@ -417,15 +378,55 @@ void conta_pecas (int grelha[][10], int sz)
 
         }
     }
-for(int i=0; i<11;i++)
-{
-    if(pecas[i]!=0)
-    {
-        printf("Quantidade de pecas com o valor %d: %d.\n", (int)pow(2,(i+1)), pecas[i]);
-    }
+	for(int i=0; i<11;i++)
+	{
+		if(pecas[i]!=0)
+		{
+			printf("Quantidade de pecas com o valor %d: %d.\n", (int)pow(2,(i+1)), pecas[i]);
+		}
+	}
 }
 
+void fim_de_jogo(int grelha[][10], int sz, int numero_total_de_comb)
+{
+    int i, j;
+    int controle1 = 0;
+    int controle2 = 0;
+
+    for(i=0; i<sz; i++)
+    {
+        for (j=0; j<sz; j++)
+        {
+            if (grelha[i][j]==2048)
+            {
+                printf("\nParabens, voce ganhou!\nO numero total de combinacoes durante o jogo foi:%d.", numero_total_de_comb);
+                conta_pecas(grelha, sz);
+                exit(1);
+            }
+
+            if(grelha[i][j]!=0)
+            {
+                controle1++;
+            }
+            if(grelha[i][j]!=grelha[i+1][j] && grelha[i][j]!=grelha[i-1][j] && grelha[i][j]!=grelha[i][j-1] && grelha[i][j]!=grelha[i][j+1])
+            {
+                controle2++;
+            }
+        }
+
+
+    }
+
+    if (controle1==(sz*sz)&&controle2==(sz*sz))
+    {
+        printf("Game over.\n");
+        printf("O numero total de combinacoes durante o jogo foi: %d.\n", numero_total_de_comb);
+        conta_pecas(grelha, sz);
+        exit(1);
+    }
+
 }
+
 int jogada(int grelha[][10], int sz, char sentido[])
 {
     int ncomb=0;
@@ -468,6 +469,8 @@ int main()
         scanf("%s", input);
         if(strcasecmp(input, "F")==0)
         {
+			printf("Numero de combinacoes: %d\n\n", numero_de_comb);
+			conta_pecas (grelha, sz);
             printf("A sair...");
             exit(1);
         }
