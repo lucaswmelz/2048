@@ -469,7 +469,7 @@ int main()
         scanf("%s", input);
         if(strcasecmp(input, "F")==0)
         {
-			printf("Numero de combinacoes: %d\n\n", numero_de_comb);
+			printf("O numero total de combinacoes durante o jogo foi: %d.\n", numero_total_de_comb);
 			conta_pecas(grelha, sz);
             printf("A sair...");
             exit(1);
