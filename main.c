@@ -38,8 +38,17 @@ void inicializagrelha(int grelha[][10], int sz)
         coluna1 = rand()%sz;
     }
     grelha[linha1][coluna1] = geranumero();
+}
 
+void inicializagrelhaAuto(int grelha[][10], int sz){
+    for (int r=0; r<sz; r++) // preenche a matriz
+    {
+        for (int t=0; t<sz; t++)
+        {
+            grelha[r][t]=geranumero();
+        }
 
+    }
 }
 
 int direita (int grelha[][10], int sz)
@@ -269,6 +278,24 @@ void mostrar (int grelha[][10], int sz)
         for (int t=0; t<sz; t++)
         {
             printf("%3d ", grelha[r][t]);
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+}
+
+void mostrarAuto (int grelha[][10], int sz)
+{
+    for (int r=0; r<sz; r++)
+    {
+        for (int t=0; t<sz; t++)
+        {
+            if(!grelha[r][t]){
+                printf("%3s ", "-");
+            }else{
+                printf("%3d ", grelha[r][t]);
+            }
         }
         printf("\n");
     }
